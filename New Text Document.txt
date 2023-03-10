@@ -58,8 +58,51 @@
 Тук пресмятаме сбора от средните 2 числа, и го делим на 2.
 В този случай медианата е 3.5.
 ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+Решаване на матрици: 
 
+using MathNet.Numerics.LinearAlgebra;
+using System;
+using System.Linq;
 
+//Това са данните от потребителя
+int[] firstRow = new int[3];
+int[] secondRow = new int[3];
+int[] thirdRow = new int[3];
+
+for (int i = 1; i < 4; i++)
+{
+    //Тук взимаме данните от конзолата и ги правим на масив от числа
+    int[] currentInput = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+    //Запазваме данните от масива по-горе в масивите за данни
+    if (i == 1) 
+    { firstRow = currentInput; }
+    if (i == 2)
+    { secondRow = currentInput; }
+    if (i == 3)
+    { thirdRow = currentInput; }
+
+}
+
+//Правим матрицата
+var A = Matrix<double>.Build.DenseOfArray(new double[,] {
+ { firstRow[0], firstRow[1], firstRow[2] },
+ { secondRow[0], secondRow[1], secondRow[2] },
+ { thirdRow[0], thirdRow[1], thirdRow[2]}
+});
+
+//Даваме вектора
+var b = Vector<double>.Build.Dense(new double[] { -9,3,25 });
+
+//Решаваме матрицата
+var x = A.Solve(b);
+//Намираме детерминанта
+var det = A.Determinant();
+
+//Резултат:
+Console.WriteLine($"x1 = {Math.Round(x[0])}");
+Console.WriteLine($"x2 = {Math.Round(x[1])}");
+Console.WriteLine($"x3 = {Math.Round(x[2])}");
+Console.WriteLine("Determinant = " + det);
 
 
 
